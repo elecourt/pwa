@@ -1,0 +1,14 @@
+{
+    "name": "Emeline's blog",
+    "short_name": "BlogEmeline",
+    "start_url": ".",
+    "icons": [
+        {
+            "src": "https://abs.twimg.com/responsive-web/client-web/icon-default.522d363a.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "display": "standalone",
+    "id": "blog-emeline"
+}
