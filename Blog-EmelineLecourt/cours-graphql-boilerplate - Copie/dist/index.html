@@ -5,7 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + Vue</title>
-    <script type="module" crossorigin src="/assets/index-b335ae04.js"></script>
+    <script type="module" crossorigin src="/assets/index-b439416e.js"></script>
     <link rel="stylesheet" href="/assets/index-c3469170.css">
   </head>
   <body>
@@ -13,3 +13,11 @@
     
   </body>
 </html>
+
+    <script async>
+      if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register("public/service-worker.js");
+      } else {
+        alert("Changez de navigateur");
+      }
+    </script>

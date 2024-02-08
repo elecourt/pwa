@@ -11,3 +11,11 @@
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
+
+    <script async>
+      if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register("%PUBLIC_URL%/service-worker.js");
+      } else {
+        alert("Changez de navigateur");
+      }
+    </script>

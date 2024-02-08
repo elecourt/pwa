@@ -82,6 +82,9 @@ self.addEventListener('fetch', function(event){
         console.log(event.request.url);
         event.respondWith(getFromCache(PRECACHE_NAME, event.request));
     }
+    else if(event.request.url.startsWith('https://cloud.mongodb.com/v2/653b6816c933e0622208d9f9#/metrics/replicaSet/6553282baa0a81662d8eb67f/explorer/test')){
+        event.respondWith(getFromCacheOrNetwork(BLOG_DATA_CACHE, event.request));
+    }
     // Sinon je fais une requête classique
     else {
         event.respondWith(fetch(event.request));
