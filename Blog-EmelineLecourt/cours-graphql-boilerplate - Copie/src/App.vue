@@ -2,6 +2,8 @@
 import { onMounted, ref } from "vue";
 import queryManagerInstance from "./graphql/queryManagerInstance";
 import Post from "./components/Post.vue";
+import { OverlappingFieldsCanBeMergedRule } from "graphql";
+import { openDB } from 'idb';
 
 const post = ref({
   title: "",
@@ -17,6 +19,25 @@ async function createPost() {
   );
   post.value.title = "";
   post.value.link = "";
+}
+
+async function saveLater(post){
+  const database = await openDB(
+    //nom de la BDD
+    //Version
+    //options
+    'offline-sync',
+    1,
+    {
+      upgrade(db){
+        db.createObjectStore('posts', {keyPath: 'id', autoIncrement: true})
+      }
+    }
+  )
+  await database.add('posts', post);
+
+  const serviceWorker = await navigator.serviceWorker.ready;
+  await serviceWorker.sync.register('sync-new-posts');
 }
 
 async function loadPosts() {

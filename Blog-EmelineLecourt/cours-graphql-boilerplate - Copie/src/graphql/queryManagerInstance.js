@@ -19,7 +19,7 @@ class QueryManager {
   }
   
   async getPosts() {
-  const { data } = await graphqlClient.query({
+  const { data, error } = await graphqlClient.query({
     query: gql`
       query {
         posts{

@@ -49,6 +49,25 @@ function getPlaceHolder(){
     });
 }
 
+function getFromNetworkOrCache(cacheName, request) {
+    return caches.open(cacheName).then(function(cache){
+        return fetch(request).then(function(networkResponse){
+            console.log("Got from network");
+            cache.put(request, networkResponse.clone());
+            return networkResponse;
+        }).catch(function(error){
+            return cache.match(request).then(function(cachedResponse){
+                if(cachedResponse){
+                    console.log("Got from cache");
+                    return cachedResponse;
+                } else {
+                    console.error("Couldn't fetch posts");
+                }
+            })
+        })
+    })
+}
+
 function getFromCacheOrNetwork(cacheName, request, onError = null){
     return caches.open(cacheName).then(function(cache){
             return cache.match(request).then(function(cachedResult){
@@ -82,8 +101,8 @@ self.addEventListener('fetch', function(event){
         console.log(event.request.url);
         event.respondWith(getFromCache(PRECACHE_NAME, event.request));
     }
-    else if(event.request.url.startsWith('https://cloud.mongodb.com/v2/653b6816c933e0622208d9f9#/metrics/replicaSet/6553282baa0a81662d8eb67f/explorer/test')){
-        event.respondWith(getFromCacheOrNetwork(BLOG_DATA_CACHE, event.request));
+    else if(event.request.url.startsWith('http://localhost:8081')){
+        event.respondWith(getFromNetworkOrCache(BLOG_DATA_CACHE, event.request));
     }
     // Sinon je fais une requête classique
     else {
